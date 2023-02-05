@@ -16,6 +16,10 @@ archivos = os.listdir("Exportaciones")
 # Agregar 'Exportaciones/' a la lista de archivos para que el path sea correcto
 archivos = ["Exportaciones/" + archivo for archivo in archivos]
 
+#Crear carpeta Generado si no existe
+if not os.path.exists("Generado"):
+    os.makedirs("Generado")
+
 # Cargar los archivos en el DataFrame
 for archivo in archivos:
     df = pd.read_excel(archivo, sheet_name="Detalle", engine="openpyxl")
@@ -37,7 +41,7 @@ for archivo in archivos:
         axis=1)
     Exportaciones = pd.concat([Exportaciones, df])
 
-Exportaciones.to_excel("Exportaciones.xlsx", index=False)
+Exportaciones.to_excel("Generado/Exportaciones.xlsx", index=False)
 
 # Crear columna de 'Precio' a partir de 'U$S FOB' y 'Kgs. Netos'
 Exportaciones["Precio"] = Exportaciones["U$S FOB"] / Exportaciones["Kgs. Netos"]
@@ -100,20 +104,18 @@ Exportaciones.loc[
 
 Exportaciones = Exportaciones.round(decimals=6)
 
-#Crear carpeta Generado si no existe
-if not os.path.exists("Generado"):
-    os.makedirs("Generado")
-
 # Exportar las 'Exportaciones', 'Exp_SIM', 'Exp_DescripcionArancelaria' a Excel
-Exportaciones.to_excel(
-    "Generado/Exportaciones Procesadas.xlsx",
-    sheet_name="Exportaciones")
-
 Exp_SIM.to_excel(
     "Generado/Exp_SIM.xlsx",
-    sheet_name="Exp_SIM")
+    sheet_name="Exp_SIM",
+    index=False)
 
 Exp_DescripcionArancelaria.to_excel(
     "Generado/Exp_DescripcionArancelaria.xlsx",
-    sheet_name="Exp_DescripcionArancelaria")
+    sheet_name="Exp_DescripcionArancelaria"
+    index=False)
 
+Exportaciones.to_excel(
+    "Generado/Exportaciones Procesadas.xlsx",
+    sheet_name="Exportaciones",
+    index=False)

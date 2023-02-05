@@ -41,7 +41,7 @@ archivos = ["Exportaciones/" + archivo for archivo in archivos]
 
 #Cargar Exportaciones.xlsx
 
-Exportaciones = pd.read_excel("Exportaciones.xlsx", engine="openpyxl")
+Exportaciones = pd.read_excel("Generado/Exportaciones.xlsx", engine="openpyxl")
 
 
 # Filtrar los que no tengan 'U$S Unitario' y no sea = 0
@@ -107,15 +107,18 @@ if not os.path.exists("Generado"):
     os.makedirs("Generado")
 
 # Exportar las 'Exportaciones', 'Exp_SIM', 'Exp_DescripcionArancelaria' a Excel
-Exportaciones.to_excel(
-    "Generado/Exportaciones Procesadas USD.xlsx",
-    sheet_name="Exportaciones")
-
 Exp_SIM.to_excel(
     "Generado/Exp_SIM USD.xlsx",
-    sheet_name="Exp_SIM")
+    sheet_name="Exp_SIM",
+    index=False)
 
 Exp_DescripcionArancelaria.to_excel(
     "Generado/Exp_DescripcionArancelaria USD.xlsx",
-    sheet_name="Exp_DescripcionArancelaria")
+    sheet_name="Exp_DescripcionArancelaria",
+    index=False)
 
+
+Exportaciones.to_excel(
+    "Generado/Exportaciones Procesadas USD.xlsx",
+    sheet_name="Exportaciones",
+    index=False)
