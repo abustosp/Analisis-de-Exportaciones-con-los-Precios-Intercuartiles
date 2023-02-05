@@ -102,6 +102,14 @@ Exportaciones.loc[
     Exportaciones["Precio"] < Exportaciones["25%_y"], 
     "Ajuste Descripcion Arancelaria"] = (Exportaciones["Kgs. Netos"] * Exportaciones["50%_y"])
 
+# Cambiar los sufijos '_x' y '_y' de las columnas '25%' y '50%' por '_NCM-SIM' y '_Descripcion Arancelaria'
+Exportaciones = Exportaciones.rename(
+    columns={
+        "25%_x": "25%_NCM-SIM",
+        "50%_x": "50%_NCM-SIM",
+        "25%_y": "25%_Descripcion Arancelaria",
+        "50%_y": "50%_Descripcion Arancelaria"})
+
 Exportaciones = Exportaciones.round(decimals=6)
 
 # Exportar las 'Exportaciones', 'Exp_SIM', 'Exp_DescripcionArancelaria' a Excel
