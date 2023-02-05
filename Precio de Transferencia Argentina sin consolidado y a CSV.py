@@ -7,37 +7,8 @@ import warnings
 warnings.filterwarnings("ignore")
 
 
-# Crear un DataFrame vacío
-Exportaciones = pd.DataFrame()
-
-# Cargar en una lista los nombres de los archivos dentro de la carpeta 'Exportaciones'
-archivos = os.listdir("Exportaciones")
-
-# Agregar 'Exportaciones/' a la lista de archivos para que el path sea correcto
-archivos = ["Exportaciones/" + archivo for archivo in archivos]
-
-# Cargar los archivos en el DataFrame
-for archivo in archivos:
-    df = pd.read_excel(archivo, sheet_name="Detalle", engine="openpyxl")
-    # Eliminar las columnas 'Estado' , 'Tipo de Dato' , 'Fecha Cargado' , 'Destinación' , 'Flete U$S' , 'Seguro' , 'Marca - Sufijos' , 'Cantidad' , 'Unitario Divisa' , 'FOB Divisa' , 'Moneda Divisa' , 'Condición de Venta' , 'Marca o Descripcion'
-    df = df.drop(
-        [   "Estado",
-            "Tipo de Dato",
-            "Fecha Cargado",
-            "Destinación",
-            "Flete U$S",
-            "Seguro",
-            "Marca - Sufijos",
-            "Cantidad",
-            "Unitario Divisa",
-            "FOB Divisa",
-            "Moneda Divisa",
-            "Condición de Venta",
-            "Marca o Descripcion"],
-        axis=1)
-    Exportaciones = pd.concat([Exportaciones, df])
-
-Exportaciones.to_excel("Exportaciones.xlsx", index=False)
+# Leer el archivo de 'Exportaciones'
+Exportaciones = pd.read_excel("Exportaciones.xlsx")
 
 # Crear columna de 'Precio' a partir de 'U$S FOB' y 'Kgs. Netos'
 Exportaciones["Precio"] = Exportaciones["U$S FOB"] / Exportaciones["Kgs. Netos"]
@@ -104,16 +75,27 @@ Exportaciones = Exportaciones.round(decimals=6)
 if not os.path.exists("Generado"):
     os.makedirs("Generado")
 
-# Exportar las 'Exportaciones', 'Exp_SIM', 'Exp_DescripcionArancelaria' a Excel
-Exportaciones.to_excel(
-    "Generado/Exportaciones Procesadas.xlsx",
-    sheet_name="Exportaciones")
+# Exportar las 'Exportaciones', 'Exp_SIM', 'Exp_DescripcionArancelaria' a CSV con el nombre de 'Exportaciones Procesadas', 'Exp SIM', 'Exp DescripcionArancelaria' con el separador ';' , sin el index , con el encoding 'latin-1' , con separador de miles '.' y con separador de decimales ','
+Exportaciones.to_csv(
+    "Generado/Exportaciones Procesadas.csv", 
+    sep=";", 
+    index=False, 
+    encoding="latin-1", 
+    decimal=",", 
+    thousands=".")
 
-Exp_SIM.to_excel(
-    "Generado/Exp_SIM.xlsx",
-    sheet_name="Exp_SIM")
+Exp_SIM.to_csv(
+    "Generado/Exp SIM.csv",
+    sep=";",
+    index=False,
+    encoding="latin-1",
+    decimal=",",
+    thousands=".")
 
-Exp_DescripcionArancelaria.to_excel(
-    "Generado/Exp_DescripcionArancelaria.xlsx",
-    sheet_name="Exp_DescripcionArancelaria")
-
+Exp_DescripcionArancelaria.to_csv(
+    "Generado/Exp DescripcionArancelaria.csv",
+    sep=";",
+    index=False,
+    encoding="latin-1",
+    decimal=",",
+    thousands=".")

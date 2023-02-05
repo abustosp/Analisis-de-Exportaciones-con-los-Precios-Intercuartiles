@@ -2,7 +2,6 @@ import pandas as pd
 import numpy as np
 import os
 import warnings
-import decimal as d
 
 # Ignorar los warnings
 warnings.filterwarnings("ignore")
@@ -103,16 +102,20 @@ Exportaciones.loc[
 
 Exportaciones = Exportaciones.round(decimals=6)
 
+#Crear carpeta Generado si no existe
+if not os.path.exists("Generado"):
+    os.makedirs("Generado")
+
 # Exportar las 'Exportaciones', 'Exp_SIM', 'Exp_DescripcionArancelaria' a Excel
 Exportaciones.to_excel(
-    "Exportaciones Procesadas USD.xlsx",
+    "Generado/Exportaciones Procesadas USD.xlsx",
     sheet_name="Exportaciones")
 
 Exp_SIM.to_excel(
-    "Exp_SIM USD.xlsx",
+    "Generado/Exp_SIM USD.xlsx",
     sheet_name="Exp_SIM")
 
 Exp_DescripcionArancelaria.to_excel(
-    "Exp_DescripcionArancelaria USD.xlsx",
+    "Generado/Exp_DescripcionArancelaria USD.xlsx",
     sheet_name="Exp_DescripcionArancelaria")
 
