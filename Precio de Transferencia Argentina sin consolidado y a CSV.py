@@ -8,7 +8,7 @@ warnings.filterwarnings("ignore")
 
 
 # Leer el archivo de 'Exportaciones'
-Exportaciones = pd.read_excel("Exportaciones.xlsx")
+Exportaciones = pd.read_excel("Generado/Exportaciones.xlsx")
 
 # Crear columna de 'Precio' a partir de 'U$S FOB' y 'Kgs. Netos'
 Exportaciones["Precio"] = Exportaciones["U$S FOB"] / Exportaciones["Kgs. Netos"]
@@ -69,6 +69,14 @@ Exportaciones.loc[
     Exportaciones["Precio"] < Exportaciones["25%_y"], 
     "Ajuste Descripcion Arancelaria"] = (Exportaciones["Kgs. Netos"] * Exportaciones["50%_y"])
 
+# Cambiar los sufijos '_x' y '_y' de las columnas '25%' y '50%' por '_NCM-SIM' y '_Descripcion Arancelaria'
+Exportaciones = Exportaciones.rename(
+    columns={
+        "25%_x": "25%_NCM-SIM",
+        "50%_x": "50%_NCM-SIM",
+        "25%_y": "25%_Descripcion Arancelaria",
+        "50%_y": "50%_Descripcion Arancelaria"})
+
 Exportaciones = Exportaciones.round(decimals=6)
 
 #Crear carpeta Generado si no existe
@@ -81,21 +89,18 @@ Exp_SIM.to_csv(
     sep=";",
     index=False,
     encoding="latin-1",
-    decimal=",",
-    thousands=".")
+    decimal=",")
 
 Exp_DescripcionArancelaria.to_csv(
     "Generado/Exp DescripcionArancelaria.csv",
     sep=";",
     index=False,
     encoding="latin-1",
-    decimal=",",
-    thousands=".")
+    decimal=",")
 
 Exportaciones.to_csv(
     "Generado/Exportaciones Procesadas.csv", 
     sep=";", 
     index=False, 
     encoding="latin-1", 
-    decimal=",", 
-    thousands=".")
+    decimal=",")
