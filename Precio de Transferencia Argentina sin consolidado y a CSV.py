@@ -76,14 +76,6 @@ if not os.path.exists("Generado"):
     os.makedirs("Generado")
 
 # Exportar las 'Exportaciones', 'Exp_SIM', 'Exp_DescripcionArancelaria' a CSV con el nombre de 'Exportaciones Procesadas', 'Exp SIM', 'Exp DescripcionArancelaria' con el separador ';' , sin el index , con el encoding 'latin-1' , con separador de miles '.' y con separador de decimales ','
-Exportaciones.to_csv(
-    "Generado/Exportaciones Procesadas.csv", 
-    sep=";", 
-    index=False, 
-    encoding="latin-1", 
-    decimal=",", 
-    thousands=".")
-
 Exp_SIM.to_csv(
     "Generado/Exp SIM.csv",
     sep=";",
@@ -98,4 +90,12 @@ Exp_DescripcionArancelaria.to_csv(
     index=False,
     encoding="latin-1",
     decimal=",",
+    thousands=".")
+
+Exportaciones.to_csv(
+    "Generado/Exportaciones Procesadas.csv", 
+    sep=";", 
+    index=False, 
+    encoding="latin-1", 
+    decimal=",", 
     thousands=".")
