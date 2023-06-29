@@ -4,7 +4,7 @@ Script para analizar los Precios Intercuartiles por NCM-SIM y por descripción a
 
 ---
 
-El licenciamiento es con PL (es decir que no se puede distribuir comercialmente, solamente GRATIS). y si se utiliza este el código, su derivado también debe ser distribuido abierta y gratuitamente. 
+El licenciamiento es bajo PL (es decir que no se puede distribuir comercialmente, solamente GRATIS). y si se utiliza este el código, su derivado también debe ser distribuido abierta y gratuitamente. 
 
 ---
 
